@@ -90,7 +90,7 @@ export default async function DashboardPage({
       </h2>
 
       <ul style={{ marginTop: 12, paddingLeft: 18 }}>
-        {jobs.map((j) => (
+        {jobs.map((j: typeof jobs[number]) => (
           <li key={j.id} style={{ marginBottom: 10 }}>
             <div style={{ fontWeight: 600 }}>{j.title}</div>
             <div style={{ opacity: 0.8 }}>
