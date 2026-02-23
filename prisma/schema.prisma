@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -21,6 +22,7 @@ model Source {
   name          String   @unique
   type          String   // "GREENHOUSE" for MVP
   orgIdentifier String   // e.g. "stripe" or company board identifier
+  companyName   String
   enabled       Boolean  @default(true)
   lastRunAt     DateTime?
 
@@ -46,17 +48,17 @@ model Job {
 }
 
 model Profile {
-  id        String   @id @default(cuid())
-  userId    String
-  name      String
-  keywords  String   // e.g. "electrical engineer; power"
-  location  String?  // e.g. "Vancouver"
-  remoteOnly Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  userId     String
+  name       String
+  keywords   String   // e.g. "electrical engineer; power"
+  location   String?  // e.g. "Vancouver"
+  remoteOnly Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  user      User     @relation(fields: [userId], references: [id])
-  matches   Match[]
+  user       User     @relation(fields: [userId], references: [id])
+  matches    Match[]
 }
 
 model Match {
