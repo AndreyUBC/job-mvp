@@ -35,6 +35,7 @@ model Job {
   externalId  String
   title       String
   company     String
+  companyName String
   location    String
   url         String
   snippet     String?
