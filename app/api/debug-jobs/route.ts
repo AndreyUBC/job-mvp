@@ -8,8 +8,8 @@ export async function GET() {
   const nullSources = await prisma.$queryRaw`
     SELECT id, name, "companyName" FROM "Source" WHERE "companyName" IS NULL LIMIT 5
   `;
-  const jobCount = await prisma.$queryRaw`SELECT COUNT(*) FROM "Job"`;
-  const sourceCount = await prisma.$queryRaw`SELECT COUNT(*) FROM "Source"`;
+  const jobCount = await prisma.$queryRaw`SELECT COUNT(*)::int FROM "Job"`;
+  const sourceCount = await prisma.$queryRaw`SELECT COUNT(*)::int FROM "Source"`;
   
   return NextResponse.json({ nullJobs, nullSources, jobCount, sourceCount });
 }
