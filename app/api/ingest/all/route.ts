@@ -28,12 +28,14 @@ async function ingestGreenhouse(
         url: job.absolute_url,
         snippet: job.content ? String(job.content).slice(0, 500) : null,
         company: companyName,
+        companyName: companyName,
       },
       create: {
         sourceId,
         externalId: String(job.id),
         title: job.title,
         company: companyName,
+        companyName: companyName,
         location: job.location?.name ?? "Unknown",
         url: job.absolute_url,
         snippet: job.content ? String(job.content).slice(0, 500) : null,
@@ -81,6 +83,7 @@ async function ingestLever(
         externalId: String(job.id),
         title: job.text ?? job.title ?? "Untitled",
         company: companyName,
+        companyName: companyName,
         location: job.categories?.location ?? job.location ?? "Unknown",
         url: job.hostedUrl ?? job.applyUrl ?? job.url ?? "",
         snippet: job.descriptionPlain
