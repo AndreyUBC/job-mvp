@@ -77,6 +77,8 @@ async function ingestLever(
           ? String(job.description).slice(0, 500)
           : null,
         company: companyName,
+        companyName: companyName,
+
       },
       create: {
         sourceId,
