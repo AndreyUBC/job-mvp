@@ -4,5 +4,13 @@
       "path": "/api/cron/ingest",
       "schedule": "0 16 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "app/api/ingest/all/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/cron/ingest/route.ts": {
+      "maxDuration": 60
+    }
+  }
 }
