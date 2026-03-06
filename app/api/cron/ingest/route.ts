@@ -3,30 +3,20 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
 
-  if (!secret) {
-    return NextResponse.json(
-      { ok: false, error: "Missing CRON_SECRET" },
-      { status: 500 }
-    );
-  }
-
+  // Allow Vercel cron runner OR manual calls with Bearer token
+  const isVercelCron = req.headers.get("x-vercel-cron") === "1";
   const auth = req.headers.get("authorization");
-  if (auth !== `Bearer ${secret}`) {
-    return NextResponse.json(
-      { ok: false, error: "Unauthorized" },
-      { status: 401 }
-    );
+  const isManual = secret && auth === `Bearer ${secret}`;
+
+  if (!isVercelCron && !isManual) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
-  // Call /api/ingest/all internally
   const url = new URL("/api/ingest/all", req.url);
-
   const res = await fetch(url.toString(), {
     method: "POST",
     headers: {
       accept: "application/json",
-      // only needed if you later protect /api/ingest/all
-      authorization: `Bearer ${secret}`,
     },
     cache: "no-store",
   });
